@@ -41,7 +41,7 @@
 #include "../packets/entity_update.h"
 #include "../zone_instance.h"
 #include "../mob_modifier.h"
-
+#include "../../common/shellargs.h"
 
 std::map<uint16, CZone*> g_PZoneList;   // глобальный массив указателей на игровые зоны
 CNpcEntity*  g_PTrigger;    // триггер для запуска событий
@@ -541,6 +541,8 @@ void LoadMOBList()
         }
     }
 
+    if (!shell_arg_present("--no-mobs"))
+    { // TODO: Indentation, if this is kept in. Trying to keep diff size small.
     // handle mob initialise functions after they're all loaded
     ForEachZone([](CZone* PZone)
     {
@@ -561,6 +563,7 @@ void LoadMOBList()
             }
         });
     });
+    } // --no-mobs
 
     // attach pets to mobs
     const int8* PetQuery =
