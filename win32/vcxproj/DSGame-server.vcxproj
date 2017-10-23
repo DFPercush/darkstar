@@ -237,6 +237,7 @@
     <ClInclude Include="..\..\src\common\recast\Recast.h" />
     <ClInclude Include="..\..\src\common\recast\RecastAlloc.h" />
     <ClInclude Include="..\..\src\common\recast\RecastAssert.h" />
+    <ClInclude Include="..\..\src\common\shellargs.h" />
     <ClInclude Include="..\..\src\common\showmsg.h" />
     <ClInclude Include="..\..\src\common\socket.h" />
     <ClInclude Include="..\..\src\common\sql.h" />
@@ -481,6 +482,7 @@
     <ClCompile Include="..\..\src\common\detour\DetourNode.cpp" />
     <ClCompile Include="..\..\src\common\kernel.cpp" />
     <ClCompile Include="..\..\src\common\md52.cpp" />
+    <ClCompile Include="..\..\src\common\shellargs.cpp" />
     <ClCompile Include="..\..\src\common\showmsg.cpp" />
     <ClCompile Include="..\..\src\common\socket.cpp" />
     <ClCompile Include="..\..\src\common\sql.cpp" />

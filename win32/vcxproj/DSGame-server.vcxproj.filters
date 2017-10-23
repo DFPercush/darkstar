@@ -860,6 +860,9 @@
     <ClInclude Include="..\..\src\map\packets\event_update_string.h">
       <Filter>Header Files\packets</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\common\shellargs.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\map\ability.cpp">
@@ -1575,6 +1578,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\map\packets\event_update_string.cpp">
       <Filter>Source Files\packets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\shellargs.cpp">
+      <Filter>Source Files\common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

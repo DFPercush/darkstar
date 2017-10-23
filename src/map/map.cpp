@@ -29,6 +29,7 @@ This file is part of DarkStar-server source code.
 #include "../common/version.h"
 #include "../common/zlib.h"
 #include "../common/sql.h"
+#include "../common/shellargs.h"
 
 #include <math.h>
 #include <stdio.h>
@@ -85,6 +86,7 @@ map_session_list_t map_session_list;
 CCommandHandler CmdHandler;
 
 std::thread messageThread;
+
 
 /************************************************************************
 *                                                                       *
@@ -153,9 +155,35 @@ int32 do_init(int32 argc, int8** argv)
     for (int i = 1; i < argc; i++)
     {
         if (strcmp(argv[i], "--ip") == 0)
+        {
             map_ip.s_addr = inet_addr(argv[i + 1]);
+            set_shell_arg(argv[i], argv[i + 1]);
+            i++; // Consume the next arg
+        }
         else if (strcmp(argv[i], "--port") == 0)
+        {
             map_port = std::stoi(argv[i + 1]);
+            set_shell_arg(argv[i], argv[i + 1]);
+            i++;
+        }
+        else if (strcmp(argv[i], "--") == 0)
+        {
+            // Stop parsing
+            break;
+        }
+        else if (argv[i][0] == '-')
+        {
+            // --arg-name=value
+            // value is optional. No spaces between name/value pairs.
+            // For options of the form { --name [value] }, add another 'else if' above,
+            //    and i++ to consume the second word. See src/common/shellargs.cpp/h
+            std::string argText = argv[i];
+            size_t eqPos = argText.find('=');
+            if (eqPos == std::string::npos)
+                set_shell_arg(argText.c_str(), "");
+            else
+                set_shell_arg(argText.substr(0, eqPos).c_str(), argText.substr(eqPos + 1).c_str());
+        }
     }
 
     MAP_CONF_FILENAME = "./conf/map_darkstar.conf";
@@ -281,6 +309,13 @@ void do_final(int code)
 
     timer_final();
     socket_final();
+
+    std::string unusedShellOptionsMessage = unused_shell_args();
+    if (unusedShellOptionsMessage.length() > 0) {}
+    {
+        unusedShellOptionsMessage = CL_YELLOW "[Warning]" CL_RESET " The following shell args were not used: " + unusedShellOptionsMessage + "\n";
+        ShowMessage(unusedShellOptionsMessage);
+    }
 
     exit(code);
 }
@@ -1412,3 +1447,4 @@ void log_init(int argc, char** argv)
     }
     InitializeLog(logFile);
 }
+
