@@ -311,7 +311,7 @@ void do_final(int code)
     socket_final();
 
     std::string unusedShellOptionsMessage = unused_shell_args();
-    if (unusedShellOptionsMessage.length() > 0) {}
+    if (unusedShellOptionsMessage.length() > 0)
     {
         unusedShellOptionsMessage = CL_YELLOW "[Warning]" CL_RESET " The following shell args were not used: " + unusedShellOptionsMessage + "\n";
         ShowMessage(unusedShellOptionsMessage);
