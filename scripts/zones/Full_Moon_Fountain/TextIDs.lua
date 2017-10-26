@@ -9,3 +9,5 @@ ITEM_CANNOT_BE_OBTAINED = 6380; -- You cannot obtain the item <item>. Come back 
 
 -- conquest Base
 CONQUEST_BASE = 7047; -- Tallying conquest results...
+
+-- Note: Full moon fountain does not share the same text IDs as other common/zilart battlefield messages.

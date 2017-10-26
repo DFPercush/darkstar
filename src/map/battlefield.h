@@ -123,7 +123,6 @@ public:
     duration               GetTimeInside() const;
     time_point             GetFightTime() const;
     duration               GetTimeLimit() const;
-    time_point             GetWipeTime() const;
     size_t                 GetMaxParticipants() const;
     size_t                 GetPlayerCount() const;
     uint8                  GetLevelCap() const;
@@ -149,10 +148,8 @@ public:
     void                   SetRecord(const std::string& name, duration time, size_t partySize);
     void                   SetStatus(uint8 status);
     void                   SetRuleMask(uint16 rulemask);
-    void                   SetStartTime(time_point time);
     void                   SetFightTime(time_point time);
     void                   SetTimeLimit(duration time);
-    void                   SetWipeTime(time_point time);
     void                   SetMaxParticipants(uint8 max);
     void                   SetLevelCap(uint8 cap);
     void                   SetLocalVar(const std::string& name, uint64_t value);
@@ -190,7 +187,6 @@ private:
     time_point             m_Tick;
     time_point             m_FightTick;
     duration               m_TimeLimit;
-    time_point             m_WipeTime;
     duration               m_FinishTime;
     duration               m_LastPromptTime;
     size_t                 m_MaxParticipants;

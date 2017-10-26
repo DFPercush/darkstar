@@ -118,16 +118,6 @@ inline int32 CLuaBattlefield::getFightTick(lua_State* L)
     return 1;
 }
 
-inline int32 CLuaBattlefield::getWipeTime(lua_State* L)
-{
-    DSP_DEBUG_BREAK_IF(m_PLuaBattlefield == nullptr);
-
-    auto count = std::chrono::duration_cast<std::chrono::seconds>(get_server_start_time() - m_PLuaBattlefield->GetWipeTime()).count();
-
-    lua_pushinteger(L, (lua_Integer)count);
-    return 1;
-}
-
 inline int32 CLuaBattlefield::getFightTime(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PLuaBattlefield == nullptr);
@@ -332,15 +322,6 @@ inline int32 CLuaBattlefield::setTimeLimit(lua_State* L)
     return 0;
 }
 
-inline int32 CLuaBattlefield::setWipeTime(lua_State* L)
-{
-    DSP_DEBUG_BREAK_IF(m_PLuaBattlefield == nullptr);
-    DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
-
-    m_PLuaBattlefield->SetWipeTime(get_server_start_time() + std::chrono::seconds(lua_tointeger(L, 1)));
-    return 0;
-}
-
 inline int32 CLuaBattlefield::setRecord(lua_State* L)
 {
     DSP_DEBUG_BREAK_IF(m_PLuaBattlefield == nullptr);
@@ -423,6 +404,7 @@ inline int32 CLuaBattlefield::cleanup(lua_State* L)
     return 1;
 }
 
+
 /************************************************************************
 *																		*
 *  declare lua function													*
@@ -438,7 +420,6 @@ Lunar<CLuaBattlefield>::Register_t CLuaBattlefield::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBattlefield,getRemainingTime),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,getTimeInside),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,getFightTick),
-    LUNAR_DECLARE_METHOD(CLuaBattlefield,getWipeTime),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,getFightTime),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,getPlayers),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,getMobs),
@@ -452,7 +433,6 @@ Lunar<CLuaBattlefield>::Register_t CLuaBattlefield::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBattlefield,setLocalVar),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,setLastTimeUpdate),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,setTimeLimit),
-    LUNAR_DECLARE_METHOD(CLuaBattlefield,setWipeTime),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,setRecord),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,setStatus),
     LUNAR_DECLARE_METHOD(CLuaBattlefield,loadMobs),

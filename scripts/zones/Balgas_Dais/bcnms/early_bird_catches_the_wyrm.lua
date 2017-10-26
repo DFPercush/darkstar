@@ -7,8 +7,10 @@ package.loaded["scripts/zones/Balgas_Dais/TextIDs"] = nil;
 
 require("scripts/globals/titles");
 require("scripts/globals/quests");
-require("scripts/zones/Balgas_Dais/TextIDs");
 require("scripts/globals/battlefield")
+
+require("scripts/zones/Balgas_Dais/TextIDs");
+
 -----------------------------------
 -- EXAMPLE SCRIPT
 --
@@ -29,6 +31,10 @@ end;
 function onBcnmEnter(player,instance)
 end;
 
+function onBattlefieldInitialise(battlefield)
+    battlefield:setLocalVar("AllowedWipeTime", 180);
+end
+
 function onBattlefieldTick(battlefield, timeinside)
     g_Battlefield.onBattlefieldTick(battlefield, timeinside)
 end
@@ -48,7 +54,11 @@ function onBattlefieldLeave(player,instance,leavecode)
     if (leavecode == 2) then -- play end CS. Need time and battle id for record keeping + storage
         player:startEvent(0x7d01,1,1,1,instance:getTimeInside(),1,1,0);
     elseif (leavecode == 4) then
-        player:startEvent(0x7d02);
+        --player:startEvent(0x7d02);
+        eject(player);
+        --player:startEvent(0x7d02, 0, 0, 0, 0, 0, instance:getEntryPos(), 180);    -- player lost
+        --player:startEvent(0x7d02, 0, 0, 0, 0, 0, 300, -123, 348, 196, 146);
+        --player:startEvent(0x7d02, 0, 0, 0, 0, 0, 300, -123, 348, 196, 180);
     end
 
 end;
