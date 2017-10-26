@@ -16,3 +16,5 @@ YOU_CANNOT_ENTER_THE_BATTLEFIELD = 162; -- You cannot enter the battlefield at p
 
 -- conquest Base
 CONQUEST_BASE = 0;
+
+-- Note: There are bcnms in this area, but they do not share the common/zilart text IDs. Will need to hunt those down.

@@ -7,8 +7,10 @@ package.loaded["scripts/zones/Balgas_Dais/TextIDs"] = nil;
 
 require("scripts/globals/titles");
 require("scripts/globals/quests");
-require("scripts/zones/Balgas_Dais/TextIDs");
 require("scripts/globals/battlefield")
+
+require("scripts/zones/Balgas_Dais/TextIDs");
+
 -----------------------------------
 -- EXAMPLE SCRIPT
 --
@@ -28,6 +30,10 @@ end;
 -- Physically entering the BCNM via bcnmEnter(bcnmid)
 function onBattlefieldEnter(player,battlefield)
 end;
+
+function onBattlefieldInitialise(battlefield)
+    battlefield:setLocalVar("AllowedWipeTime", 180);
+end
 
 function onBattlefieldTick(battlefield, timeinside)
     g_Battlefield.onBattlefieldTick(battlefield, timeinside)
@@ -49,7 +55,11 @@ function onBattlefieldLeave(player,battlefield,leavecode)
         local name, clearTime, partySize = battlefield:getRecord()
         player:startEvent(0x7d01,1,clearTime,partySize,battlefield:getTimeInside(),1,1,0);
     elseif (leavecode == 4) then
-        player:startEvent(0x7d02);
+        --player:startEvent(0x7d02);
+        eject(player);
+        --player:startEvent(0x7d02, 0, 0, 0, 0, 0, instance:getEntryPos(), 180);    -- player lost
+        --player:startEvent(0x7d02, 0, 0, 0, 0, 0, 300, -123, 348, 196, 146);
+        --player:startEvent(0x7d02, 0, 0, 0, 0, 0, 300, -123, 348, 196, 180);
     end
 
 end;

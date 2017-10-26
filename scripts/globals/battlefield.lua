@@ -140,13 +140,22 @@ end
 
 function g_Battlefield.HandleWipe(battlefield, players)
     local rekt = true
-    local wipeTime = battlefield:getWipeTime()
     local elapsed = battlefield:getTimeInside()
-
+    local allowedWipeDuration = tonumber(battlefield:getLocalVar("AllowedWipeTime"))
+    local wiped = tonumber(battlefield:getLocalVar("WipedAtTime"))
+    local lastWipeTimeNotice = tonumber(battlefield:getLocalVar("LastWipeTimeNotice"));
+    local timeSinceWipe;
+    if (wiped == 0) then
+        timeSinceWipe = 0;
+    else
+        timeSinceWipe = elapsed - wiped;
+    end
+    local needWipeTimeNotice = false;
+    
     players = players or battlefield:getPlayers()
 
-    -- pure stolen from instance.lua
-    if wipeTime == 0 then
+    -- copied from instance.lua and modified from there
+    if timeSinceWipe == 0 then
         for _, player in pairs(players) do
             if player:getHP() ~= 0 then
                 rekt = false
@@ -154,26 +163,52 @@ function g_Battlefield.HandleWipe(battlefield, players)
             end
         end
         if rekt then
-            for _, player in pairs(players) do
-                -- v:messageSpecial(ID, 3)
+            battlefield:setLocalVar("WipedAtTime", elapsed);
+            if (elapsed - lastWipeTimeNotice > 0) then
+                needWipeTimeNotice = true;
             end
-            battlefield:setWipeTime(elapsed)
         end
     else
-        if (elapsed - wipeTime) > 180 then
+        if (timeSinceWipe > allowedWipeDuration) then
             battlefield:setStatus(g_Battlefield.STATUS.LOST)
         else
             for _, player in pairs(players) do
                 if player:getHP() ~= 0 then
-                    battlefield:setWipeTime(0)
-                    rekt = false
+                    battlefield:setLocalVar("WipedAtTime", 0);
+                    needWipeTimeNotice = false;
+                    timeSinceWipe = 0;
+                    wiped = 0
+                    rekt = false;
                     break
                 end
             end
+        end
+    end
 
-            if rekt then
-                battlefield:setStatus(g_Battlefield.STATUS.LOST)
-            end
+    local wipeTimeRemaining = (allowedWipeDuration - timeSinceWipe);
+    local lastNoticeDiff = elapsed - lastWipeTimeNotice;
+    if ((not needWipeTimeNotice) and (rekt) and (lastWipeTimeNotice ~= 0) and (wiped ~= 0)) then
+        if (wipeTimeRemaining <= 60 and lastNoticeDiff >= 15) then
+            needWipeTimeNotice = true;
+        elseif (wipeTimeRemaining <= 300 and lastNoticeDiff >= 30) then
+            needWipeTimeNotice = true;
+        elseif (wipeTimeRemaining <= 600 and lastNoticeDiff >= 60) then
+            needWipeTimeNotice = true;
+        elseif (wipeTimeRemaining <= 1800 and lastNoticeDiff >= 300) then
+            needWipeTimeNotice = true;
+        elseif (lastNoticeDiff >= 900) then
+            needWipeTimeNotice = true;
+        end
+    end
+    if (needWipeTimeNotice == true and wipeTimeRemaining >= 5) then
+        for _, player in pairs(players) do
+            -- v:messageSpecial(ID, 3)
+            FormatSpecialMessage(player, "BATTLEFIELD_WIPE_TIMER", 
+            {
+                minutes = math.floor(wipeTimeRemaining / 60),
+                seconds = math.floor(wipeTimeRemaining % 60)
+            });
+            battlefield:setLocalVar("LastWipeTimeNotice", elapsed);
         end
     end
 end

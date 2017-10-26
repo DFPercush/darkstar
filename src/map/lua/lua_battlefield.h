@@ -32,6 +32,7 @@ class CBattlefield;
 class CLuaBattlefield
 {
     CBattlefield *m_PLuaBattlefield;
+
 public:
 
     static const int8 className[];
@@ -50,7 +51,6 @@ public:
     int32 getTimeInside(lua_State*);
     int32 getRemainingTime(lua_State*);
     int32 getFightTick(lua_State*);
-    int32 getWipeTime(lua_State*);
     int32 getFightTime(lua_State*);
     int32 getPlayers(lua_State*);
     int32 getMobs(lua_State*);
@@ -65,7 +65,6 @@ public:
     int32 setLastTimeUpdate(lua_State*);
     int32 setTimeLimit(lua_State*);
     int32 setFightTick(lua_State*);
-    int32 setWipeTime(lua_State*);
     int32 setRecord(lua_State*);
     int32 setStatus(lua_State*);
     int32 setLocalVar(lua_State*);

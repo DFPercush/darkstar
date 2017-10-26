@@ -786,7 +786,22 @@ function TradeBCNM(player, npc, trade, onUpdate)
         if itemId == nil or itemId < 1 or itemId > 65535 or trade:getItemCount() ~= 1 or trade:getSlotQty(0) ~= 1 then
             return false
         elseif player:hasWornItem(itemId) then
-            player:messageBasic(56, 0, 0) -- Unable to use item.
+            local zbfs = battlefields[player:getZoneID()]
+            local isValidOrb = false;
+            if zbfs ~= nil then
+                for k, v in pairs(zbfs) do
+                    if v[3] == itemId then
+                        isValidOrb = true
+                        break
+                    end
+                end
+            end
+
+            if (isValidOrb) then
+                FormatSpecialMessage(player, "ORB_ALREADY_USED", { ["orbItemId"] = itemId })
+            else
+                player:messageBasic(56, 0, 0) -- Unable to use item.
+            end
             return false
         end
     end
