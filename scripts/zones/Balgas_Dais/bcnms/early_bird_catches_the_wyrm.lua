@@ -10,6 +10,7 @@ require("scripts/globals/quests");
 require("scripts/globals/battlefield")
 
 require("scripts/zones/Balgas_Dais/TextIDs");
+require("scripts/zones/Balgas_Dais/bcnms/eject");
 
 -----------------------------------
 -- EXAMPLE SCRIPT
