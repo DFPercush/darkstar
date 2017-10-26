@@ -21,3 +21,4 @@ TAKE_THAT_YOU_WHIPPERSNAPPER = 7743; -- Take that, you whippersnapper!
 -- conquest Base
 CONQUEST_BASE = 7047; -- Tallying conquest results...
 
+require("scripts/zones/_Shared_Messages/bcnm_zilart")

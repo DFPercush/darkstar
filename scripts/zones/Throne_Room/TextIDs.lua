@@ -16,3 +16,5 @@ CONQUEST_BASE = 7047; -- Tallying conquest results...
     RETURN_TO_THE_DARKNESS = 7698; -- Return with your soul to the darkness you came from! 
            CANT_UNDERSTAND = 7699; -- You--a man who has never lived bound by the chains of his country--how can you understand my pain! 
               BLADE_ANSWER = 7700; -- Let my blade be the answer! 
+
+require("scripts/zones/_Shared_Messages/bcnm_zilart")

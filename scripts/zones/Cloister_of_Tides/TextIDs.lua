@@ -15,3 +15,5 @@ PROTOCRYSTAL = 7232; -- It is a giant crystal.
 
 -- conquest Base
 CONQUEST_BASE = 7047; -- Tallying conquest results...
+
+require("scripts/zones/_Shared_Messages/bcnm_zilart")

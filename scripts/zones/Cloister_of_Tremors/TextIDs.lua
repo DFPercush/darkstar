@@ -16,3 +16,5 @@ NOTHING_OUT_OF_THE_ORDINARY = 6400; -- There is nothing out of the ordinary here
 
 -- conquest Base
 CONQUEST_BASE = 7047; -- Tallying conquest results...
+
+require("scripts/zones/_Shared_Messages/bcnm_zilart")

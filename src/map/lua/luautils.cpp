@@ -246,7 +246,7 @@ namespace luautils
         if (ret)
         {
             if (ret != LUA_ERRFILE)
-                ShowError("luautils::%s: %s\n", function, lua_tostring(LuaHandle, -1));
+                ShowError("luautils::prepFile(\"%s\", \"%s\")@luaL_loadfile: %s\n", File, function, lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);
             return -1;
         }
@@ -254,7 +254,7 @@ namespace luautils
         ret = lua_pcall(LuaHandle, 0, 0, 0);
         if (ret)
         {
-            ShowError("luautils::%s: %s\n", function, lua_tostring(LuaHandle, -1));
+            ShowError("luautils::prepFile(\"%s\")@lua_pcall: %s\n", function, lua_tostring(LuaHandle, -1));
             lua_pop(LuaHandle, 1);
             return -1;
         }
@@ -2558,7 +2558,8 @@ namespace luautils
         CLuaBattlefield LuaBattlefield(PBattlefield);
         Lunar<CLuaBattlefield>::push(LuaHandle, &LuaBattlefield);
 
-        if (lua_pcall(LuaHandle, 2, LUA_MULTRET, 0))
+        //if (lua_pcall(LuaHandle, 2, LUA_MULTRET, 0))
+        if (lua_pcall(LuaHandle, 1, LUA_MULTRET, 0))
         {
             ShowError("luautils::onBattlefieldInitialise: %s\n", lua_tostring(LuaHandle, -1));
             return -1;

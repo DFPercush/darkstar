@@ -137,11 +137,6 @@ duration CBattlefield::GetTimeLimit() const
     return m_TimeLimit;
 }
 
-time_point CBattlefield::GetWipeTime() const
-{
-    return m_WipeTime;
-}
-
 duration CBattlefield::GetFinishTime() const
 {
     return m_FinishTime;
@@ -193,9 +188,9 @@ void CBattlefield::SetTimeLimit(duration time)
     m_TimeLimit = time;
 }
 
-void CBattlefield::SetWipeTime(time_point time)
+void CBattlefield::SetFightTime(time_point time)
 {
-    m_WipeTime = time;
+    m_FightTick = time;
 }
 
 void CBattlefield::SetArea(uint8 area)
@@ -492,7 +487,7 @@ void CBattlefield::Cleanup()
 
     for (auto mob : tempEnemies)
         RemoveEntity(mob.PMob);
-    for (auto mob : tempEnemies)
+    for (auto mob : tempEnemies2)
         RemoveEntity(mob.PMob);
     for (auto npc : tempNpcs)
         RemoveEntity(npc);
