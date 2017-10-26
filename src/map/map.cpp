@@ -1387,9 +1387,9 @@ void log_init(int argc, char** argv)
     std::string logFile;
 #ifdef DEBUGLOGMAP
 #ifdef WIN32
-    logFile = "log\\map-server.log";
+    logFile = "log\\map-server";
 #else
-    logFile = "log/map-server.log";
+    logFile = "log/map-server";
 #endif
 #endif
     bool defaultname = true;
@@ -1397,11 +1397,11 @@ void log_init(int argc, char** argv)
     {
         if (strcmp(argv[i], "--ip") == 0 && defaultname)
         {
-            logFile = argv[i + 1];
+            logFile = logFile + "-" + argv[i + 1];
         }
         else if (strcmp(argv[i], "--port") == 0 && defaultname)
         {
-            logFile.append(argv[i + 1]);
+            logFile = logFile + "-" + argv[i + 1];
         }
         else if (strcmp(argv[i], "--log") == 0)
         {
@@ -1409,5 +1409,6 @@ void log_init(int argc, char** argv)
             logFile = argv[i + 1];
         }
     }
+    logFile += ".log";
     InitializeLog(logFile);
 }
