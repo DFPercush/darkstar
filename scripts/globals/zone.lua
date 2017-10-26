@@ -105,34 +105,3 @@ function SetRespawnTime(id, minTime, maxTime)
         mob:setRespawnTime(math.random((minTime),(maxTime)));
     end
 end
-
-ZONE_MESSAGES = {};
-function FormatSpecialMessage(player, msg, args, showname)
-    -- Sends a "special message" stored in the current zone's string table to a specific player.
-    -- player: A C-bound player object, usually passed to you from the core as the first parameter to your function.
-    -- msg: (string) The message to send. Not an ID number, but a table index defined in the zone's TextIDs.lua (ZONE_MESSAGES)
-    -- args: A table which will be parsed according to the parameter names in ZONE_MESSAGES
-    --     Example: {["time_remaining_seconds"]=30, ["time_remaining_minutes"]=2}
-    -- showname: boolean, passes through to the message system. Shows the character's name as the speaker?
-    if (type(ZONE_MESSAGES) == nil) then return false; end
-    if (type(msg) ~= "string") then return false; end
-
-    local msgDesc = ZONE_MESSAGES[msg];
-    if (msgDesc == nil) then return false; end
-    if (type(msgDesc.id) ~= "number") then return false; end
-    if (type(msgDesc.params) ~= "table") then return false; end
-
-    local resolvedArgs = {}
-    if (type(args) == "table") then
-        for x = 0, 3 do
-            if (type(msgDesc.params[x]) == "string") then
-                if (args[msgDesc.params[x]] ~= nil) then
-                    resolvedArgs[x] = tonumber(args[msgDesc.params[x]]);
-                end
-            end
-        end
-    end
-    
-    player:messageSpecial(msgDesc.id, resolvedArgs[0], resolvedArgs[1], resolvedArgs[2], resolvedArgs[3], showname)
-    return true
-end

@@ -1,3 +1,6 @@
+msgSpecial = {};
+dofile("scripts/zones/_Shared_Messages/bcnm_zilart.lua")
+
 -- Variable TextID   Description text
 
 -- General Texts
@@ -17,4 +20,3 @@ TAKE_THAT_YOU_WHIPPERSNAPPER = 7631; -- Take that, you whippersnapper!
 -- conquest Base
 CONQUEST_BASE = 7047; -- Tallying conquest results...
 
-require("scripts/zones/_Shared_Messages/bcnm_zilart")

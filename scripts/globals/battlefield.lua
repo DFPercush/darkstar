@@ -54,6 +54,17 @@ g_Battlefield.LEAVECODE =
     LOST = 4
 }
 
+function g_Battlefield.onInit(battlefield, class)
+    if (type(class) ~= "string") then
+        class = "";
+    end
+    if (class == "bcnm") then
+        -- This can be overwritten by a specific bcnm script after calling g_Battlefield.onInit()
+        -- It's just a default value.
+        battlefield:setLocalVar("AllowedWipeTime", 180);
+    end
+end
+
 function g_Battlefield.onBattlefieldTick(battlefield, timeinside, players)
     local killedallmobs = true
     local mobs = battlefield:getMobs(true, true)
@@ -140,10 +151,16 @@ end
 
 function g_Battlefield.HandleWipe(battlefield, players)
     local rekt = true
+    if (battlefield:getStatus() == g_Battlefield.STATUS.LOST) then
+        return;
+    end
     local elapsed = battlefield:getTimeInside()
-    local allowedWipeDuration = tonumber(battlefield:getLocalVar("AllowedWipeTime"))
-    local wiped = tonumber(battlefield:getLocalVar("WipedAtTime"))
-    local lastWipeTimeNotice = tonumber(battlefield:getLocalVar("LastWipeTimeNotice"));
+    local allowedWipeDuration = battlefield:getLocalVar("AllowedWipeTime")
+    if (allowedWipeDuration == 0) then
+        return;  -- Battlefield does not have a wipe time limit. To insta-kick set a negative number.
+    end
+    local wiped = battlefield:getLocalVar("WipedAtTime")
+    local lastWipeTimeNotice = battlefield:getLocalVar("LastWipeTimeNotice");
     local timeSinceWipe;
     if (wiped == 0) then
         timeSinceWipe = 0;
@@ -169,8 +186,8 @@ function g_Battlefield.HandleWipe(battlefield, players)
             end
         end
     else
-        if (timeSinceWipe > allowedWipeDuration) then
-            battlefield:setStatus(g_Battlefield.STATUS.LOST)
+        if ((timeSinceWipe > allowedWipeDuration) and (allowedWipeDuration ~= 0)) then
+            battlefield:setStatus(g_Battlefield.STATUS.LOST);
         else
             for _, player in pairs(players) do
                 if player:getHP() ~= 0 then
@@ -203,11 +220,11 @@ function g_Battlefield.HandleWipe(battlefield, players)
     if (needWipeTimeNotice == true and wipeTimeRemaining >= 5) then
         for _, player in pairs(players) do
             -- v:messageSpecial(ID, 3)
-            FormatSpecialMessage(player, "BATTLEFIELD_WIPE_TIMER", 
-            {
-                minutes = math.floor(wipeTimeRemaining / 60),
-                seconds = math.floor(wipeTimeRemaining % 60)
-            });
+            if (type(msgSpecial) == "table" and msgSpecial.BATTLEFIELD_WIPE_TIMER ~= nil) then
+                player:messageSpecial(msgSpecial.BATTLEFIELD_WIPE_TIMER, 0, 0, math.floor(wipeTimeRemaining % 60), math.floor(wipeTimeRemaining / 60));
+            else
+                player:messageSystem("If all party members' HP are still zero after " .. math.floor(wipeTimeRemaining / 60) .. " minutes and " .. math.floor(wipeTimeRemaining % 60) .. " seconds, the party will be removed from the battlefield.");
+            end
             battlefield:setLocalVar("LastWipeTimeNotice", elapsed);
         end
     end
