@@ -1,11 +1,7 @@
 -- bcnm_zilart special messages
--- See zone.lua : FormatSpecialMessage()
-ZONE_MESSAGES.BATTLEFIELD_WIPE_TIMER = 
-{
-    id = 7562,
-    params = 
-    {
-        [2] = "seconds",
-        [3] = "minutes"
-    };
-};
+
+-- Parameter numbers here are base 0 as displayed in polutils
+-- player:messageSpecial(msgSpecial.ID_VAR, param0, param1, param2, param3)
+
+-- (msgSpecial.BATTLEFIELD_WIPE_TIMER, 0, 0, seconds, minutes)
+msgSpecial.BATTLEFIELD_WIPE_TIMER = 7562;

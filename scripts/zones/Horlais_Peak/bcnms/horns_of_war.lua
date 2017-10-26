@@ -30,6 +30,14 @@ end;
 function onBcnmEnter(player,instance)
 end;
 
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "bcnm");
+end
+
+function onBattlefieldTick(battlefield, timeinside)
+    g_Battlefield.onBattlefieldTick(battlefield, timeinside)
+end
+
 -- Leaving the BCNM by every mean possible, given by the LeaveCode
 -- 1=Select Exit on circle
 -- 2=Winning the BC
@@ -38,7 +46,7 @@ end;
 -- via bcnmLeave(1) or bcnmLeave(2). LeaveCodes 3 and 4 are called
 -- from the core when a player disconnects or the time limit is up, etc
 
-function onBcnmLeave(player,instance,leavecode)
+function onBattlefieldLeave(player,instance,leavecode)
 -- print("leave code "..leavecode);
     
     
