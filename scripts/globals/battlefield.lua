@@ -54,9 +54,16 @@ g_Battlefield.LEAVECODE =
     LOST = 4
 }
 
-function g_Battlefield.onInit(battlefield, class)
+g_Battlefield.messageTable = {};
+
+function g_Battlefield.onInit(battlefield, class, messageTable)
     if (type(class) ~= "string") then
         class = "";
+    end
+    if (type(messageTable) == "table") then
+        g_Battlefield.messageTable = messageTable;
+    else
+        g_Battlefield.messageTable = {};
     end
     if (class == "bcnm") then
         -- This can be overwritten by a specific bcnm script after calling g_Battlefield.onInit()
@@ -220,8 +227,9 @@ function g_Battlefield.HandleWipe(battlefield, players)
     if (needWipeTimeNotice == true and wipeTimeRemaining >= 5) then
         for _, player in pairs(players) do
             -- v:messageSpecial(ID, 3)
-            if (type(msgSpecial) == "table" and msgSpecial.BATTLEFIELD_WIPE_TIMER ~= nil) then
-                player:messageSpecial(msgSpecial.BATTLEFIELD_WIPE_TIMER, 0, 0, math.floor(wipeTimeRemaining % 60), math.floor(wipeTimeRemaining / 60));
+            --if (type(msgSpecial) == "table" and msgSpecial.BATTLEFIELD_WIPE_TIMER ~= nil) then
+            if (g_Battlefield.messageTable.BATTLEFIELD_WIPE_TIMER ~= nil) then
+                player:messageSpecial(g_Battlefield.messageTable.BATTLEFIELD_WIPE_TIMER, 0, 0, math.floor(wipeTimeRemaining % 60), math.floor(wipeTimeRemaining / 60));
             else
                 player:messageSystem("If all party members' HP are still zero after " .. math.floor(wipeTimeRemaining / 60) .. " minutes and " .. math.floor(wipeTimeRemaining % 60) .. " seconds, the party will be removed from the battlefield.");
             end

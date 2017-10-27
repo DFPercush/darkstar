@@ -34,7 +34,7 @@ function onBcnmEnter(player,instance)
 end;
 
 function onBattlefieldInitialise(battlefield)
-    g_Battlefield.onInit(battlefield, "bcnm");
+    g_Battlefield.onInit(battlefield, "bcnm", Balgas_Dais_Messages);
 end
 
 function onBattlefieldTick(battlefield, timeinside)

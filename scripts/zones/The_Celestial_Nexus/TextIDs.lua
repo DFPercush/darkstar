@@ -8,5 +8,3 @@ ITEM_CANNOT_BE_OBTAINED = 6380; -- You cannot obtain the item <item> come back a
 
 -- conquest Base
 CONQUEST_BASE = 7047; -- Tallying conquest results...
-
-require("scripts/zones/_Shared_Messages/bcnm_zilart")
