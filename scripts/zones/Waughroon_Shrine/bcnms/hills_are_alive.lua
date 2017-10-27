@@ -30,6 +30,14 @@ end;
 function onBattlefieldEnter(player,battlefield)
 end;
 
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "bcnm", Waughroon_Shrine_Messages);
+end
+
+function onBattlefieldTick(battlefield, timeinside)
+    g_Battlefield.onBattlefieldTick(battlefield, timeinside)
+end
+
 -- Leaving the BCNM by every mean possible, given by the LeaveCode
 -- 1=Select Exit on circle
 -- 2=Winning the BC

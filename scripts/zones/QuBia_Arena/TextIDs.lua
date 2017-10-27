@@ -25,5 +25,3 @@ SAVAGE_LAND = 7624; -- And with this blade I will return the glory to my kingdom
 
 -- conquest Base
 CONQUEST_BASE = 7047; -- Tallying conquest results...
-
-require("scripts/zones/_Shared_Messages/bcnm_zilart")
