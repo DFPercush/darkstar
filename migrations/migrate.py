@@ -1,6 +1,7 @@
 import MySQLdb
 import re
 import spell_blobs_to_spell_table
+import TextIDs
 
 credentials = {}
 db = None
@@ -54,7 +55,7 @@ def run_all_migrations():
     connect()
 
     run_migration(spell_blobs_to_spell_table)
-
+    run_migration(TextIDs)
     print("Finished running all migrations")
 
     close()
