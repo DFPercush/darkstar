@@ -8,10 +8,8 @@ package.loaded["scripts/zones/Balgas_Dais/TextIDs"] = nil;
 require("scripts/globals/titles");
 require("scripts/globals/quests");
 require("scripts/globals/battlefield")
-
+require("scripts/zones/Balgas_Dais/TextIDs");
 require("scripts/zones/Balgas_Dais/bcnms/eject");
-
-dofile("scripts/zones/Balgas_Dais/TextIDs.lua");
 
 -----------------------------------
 -- EXAMPLE SCRIPT
@@ -34,7 +32,7 @@ function onBattlefieldEnter(player,battlefield)
 end;
 
 function onBattlefieldInitialise(battlefield)
-    g_Battlefield.onInit(battlefield, "bcnm", Balgas_Dais_Messages);
+    g_Battlefield.onInit(battlefield, "bcnm");
 end
 
 function onBattlefieldTick(battlefield, timeinside)

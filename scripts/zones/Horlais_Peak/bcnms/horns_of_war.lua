@@ -36,7 +36,7 @@ function onBattlefieldEnter(player,battlefield)
 end;
 
 function onBattlefieldInitialise(battlefield)
-    g_Battlefield.onInit(battlefield, "bcnm", Horlais_Peak_Messages);
+    g_Battlefield.onInit(battlefield, "bcnm");
 end
 
 function onBattlefieldTick(battlefield, timeinside)
