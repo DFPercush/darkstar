@@ -4,7 +4,6 @@ import re
 
 GlobalTextIdFilename = "../scripts/globals/TextIDs.lua"
 TextIdFileVersionString        = "-- Do not edit this line. Must be first line in file to avoid re-migration. Auto generated TextIDs.lua version 1"
-#TextIdFileVersionStringEscaped = "\\-\\- Auto generated TextIDs\\.lua version (.*)"
 TextIdFileVersionStringEscaped = "\\-\\- Do not edit this line\\. Must be first line in file to avoid re\\-migration\\. Auto generated TextIDs\\.lua version (.*)"
 
 def log_messages(curs):
@@ -39,7 +38,6 @@ def needs_to_run(cur):
         return ret;
     
 def migrate(cur, db):
-    spellLimit = 1024
     cur.execute("SELECT zoneid,name FROM zone_settings;")
     rows = cur.fetchall()
     
@@ -48,7 +46,7 @@ def migrate(cur, db):
     zoneVars = {}
     varRefs = {}
     unfoundFiles = []
-    
+
     # Scrape all zone files (that have ids in the database) for variables
     for row in rows:
         zoneId = int(row[0])
@@ -67,8 +65,11 @@ def migrate(cur, db):
                     zoneVars[zoneId][match.group(1)] = match.group(2)
         else:
             unfoundFiles.append(idfile)
+    replacements, uniques = BuildCommonAndUnique(zoneVars)
+    writeOut(zoneVars, replacements, uniques, unfoundFiles, [], zoneNameToId, zoneIdToName, GlobalTextIdFilename)
+    log_messages(cur)
 
-            
+def BuildCommonAndUnique(zoneVars):
     # Scan for duplicate names with the same value and consolidate into a common dict
     replacements = {}
     uniques = {}
@@ -113,15 +114,20 @@ def migrate(cur, db):
             handledVarValPairs.append((varName, thisZoneVal))
         zoneIDs.pop(0)
         L -= 1
- 
+    return replacements, uniques
+    
+def writeOut(zoneVars, replacements, uniques, unfoundFiles, preComments, zoneNameToId, zoneIdToName, filename):
     # OUTPUT
-    out = open(GlobalTextIdFilename, "w")
-    out.write(TextIdFileVersionString + "\n\n")
+    out = open(filename, "w")
+    out.write(TextIdFileVersionString + "\n")
+    out.write("-- When you change numbers in here, please run migrations/UpdateTextIDComments.py to update the comments and shared table references. Don't change this line either. Put all your comments before the actual code because the file will be re-written from there on down.\n\n")
     for missingFile in unfoundFiles:
         out.write("-- Could not open %s\n" % missingFile)
     if unfoundFiles:
         print("    Warning: %d zones in the database did not have a TextID.lua in the file system." % len(unfoundFiles))
-        print("             See %s for a list of files/areas which were skipped." % GlobalTextIdFilename)
+        print("             See %s for a list of files/areas which were skipped." % filename)
+    for precom in preComments:
+        out.write(precom + "\n")
 
     # Generate a module-local table (with a short name) to map IDs which are shared in common among multiple zones
     out.write("\n\nlocal cm = \n{")
@@ -154,19 +160,20 @@ def migrate(cur, db):
         prevVar = curVar
         i+=1
     out.write("\n};\n\n\n")
-   
+
     # MASTER TEXT ID TABLE
     # References common table if id value is shared, or direct int value if unique
     out.write("msgSpecial =\n{")
     comma1 = False
-    for zid in zoneVars.keys():
+    #for zid in zoneVars.keys():
+    for zid in sorted(zoneVars.keys()):
         if comma1:
             out.write(",")
         else:
             comma1 = True
         out.write("\n\n    [%d] = -- %s\n    {" % (zid, zoneIdToName[zid]))
         comma2 = False
-        for varName in zoneVars[zid].keys():
+        for varName in sorted(zoneVars[zid].keys()):
             val = zoneVars[zid][varName]
             if comma2:
                 out.write(",")
@@ -187,7 +194,7 @@ def migrate(cur, db):
     out.write("\n};\n")
     out.close()
     
-    log_messages(cur)
 
+    
 if __name__ == "__main__":
     print("This module should be called from migrate.py")
