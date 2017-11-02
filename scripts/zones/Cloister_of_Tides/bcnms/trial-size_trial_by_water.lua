@@ -67,3 +67,7 @@ function onEventFinish(player,csid,option)
         player:completeQuest(OUTLANDS,TRIAL_SIZE_TRIAL_BY_WATER);
     end
 end;    
+
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "quest");
+end

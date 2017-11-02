@@ -56,3 +56,6 @@ function onEventFinish(player,csid,option)
         player:addExp(3500);
     end
 end;
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "enm");
+end

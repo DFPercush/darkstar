@@ -53,3 +53,7 @@ function onEventFinish(player,csid,option)
         player:setVar("ClassReunionProgress",6);
     end;
 end;
+
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "quest");
+end

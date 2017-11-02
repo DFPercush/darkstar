@@ -1,3 +1,4 @@
+-- Balgas_Dais
 function eject(player, win)
 	--player:setPos(x, y, z, player:getRotPos(), zoneID)
 	player:release();

@@ -55,3 +55,7 @@ function onEventFinish(player,csid,option)
     -- print("bc finish csid "..csid.." and option "..option);
     player:setVar("BASTOK92",2); -- This should be MissionStatus..But all instances of same var need updated.
 end;
+
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "mission");
+end

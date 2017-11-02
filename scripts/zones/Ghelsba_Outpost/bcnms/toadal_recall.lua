@@ -54,3 +54,6 @@ function onEventFinish(player,csid,option)
 -- print(bc finish csid ..csid.. and option ..option);
 
 end;
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "bcnm");
+end

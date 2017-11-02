@@ -47,3 +47,6 @@ function onBattlefieldLeave(player,battlefield,leavecode)
     end
     
 end;
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "dynamis");
+end

@@ -65,3 +65,13 @@ function onEventFinish(player,csid,option)
             player:messageSpecial(KEYITEM_OBTAINED,CHARRED_HELM);
         end
 end;
+
+require("scripts/globals/battlefield")
+
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "quest");
+end
+
+function onBattlefieldTick(battlefield, tick)
+    g_Battlefield.onBattlefieldTick(battlefield, tick)
+end

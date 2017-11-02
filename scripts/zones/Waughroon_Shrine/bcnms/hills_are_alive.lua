@@ -9,6 +9,7 @@ package.loaded["scripts/zones/Waughroon_Shrine/TextIDs"] = nil;
 require("scripts/globals/titles");
 require("scripts/globals/quests");
 require("scripts/zones/Waughroon_Shrine/TextIDs");
+require("scripts/globals/battlefield")
 
 -----------------------------------
 -- EXAMPLE SCRIPT

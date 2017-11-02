@@ -32,3 +32,6 @@ function onBattlefieldLeave(player,battlefield,leavecode)
     if (leavecode == 4) then
     end
 end;
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "temenos");
+end

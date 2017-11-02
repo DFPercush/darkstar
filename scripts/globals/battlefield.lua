@@ -60,10 +60,17 @@ function g_Battlefield.onInit(battlefield, class)
     if (type(class) ~= "string") then
         class = "";
     end
-    if (class == "bcnm") then
+    if ((class == "bcnm") or (class == "mission") or (class == "quest") or (class == "enm")) then
         -- This can be overwritten by a specific bcnm script after calling g_Battlefield.onInit()
         -- It's just a default value.
         battlefield:setLocalVar("AllowedWipeTime", 180);
+    end
+    -- To document and enumarate the other options available...
+    if (class == "dynamis") then
+    end
+    if (class == "temenos") then
+    end
+    if (class == "apollyon") then
     end
 end
 

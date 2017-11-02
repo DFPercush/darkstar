@@ -54,3 +54,7 @@ function onEventFinish(player,csid,option)
         player:setVar("CarbuncleDebacleProgress",4);
     end;
 end;
+
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "quest");
+end

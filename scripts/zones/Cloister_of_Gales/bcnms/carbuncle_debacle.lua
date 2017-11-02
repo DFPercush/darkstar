@@ -56,3 +56,7 @@ function onEventFinish(player,csid,option)
         player:delKeyItem(DAZEBREAKER_CHARM);
     end;
 end;
+
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "quest");
+end

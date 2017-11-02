@@ -66,3 +66,7 @@ function onEventFinish(player,csid,option)
         player:setVar("MissionStatus",4);
     end
 end;
+
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "mission");
+end

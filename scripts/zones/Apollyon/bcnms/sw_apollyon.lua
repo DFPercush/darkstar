@@ -30,3 +30,12 @@ function onBattlefieldLeave(player,battlefield,leavecode)
         player:setPos(-668,0.1,-666);
     end
 end;
+require("scripts/globals/battlefield")
+
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "apollyon");
+end
+
+function onBattlefieldTick(battlefield, tick)
+    g_Battlefield.onBattlefieldTick(battlefield, tick)
+end

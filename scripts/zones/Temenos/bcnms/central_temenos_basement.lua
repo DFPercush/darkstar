@@ -31,3 +31,12 @@ function onBattlefieldLeave(player,battlefield,leavecode)
         player:setPos(580,-1.5,4.452,192);
     end
 end;
+require("scripts/globals/battlefield")
+
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "temenos");
+end
+
+function onBattlefieldTick(battlefield, tick)
+    g_Battlefield.onBattlefieldTick(battlefield, tick)
+end

@@ -71,3 +71,12 @@ function onEventFinish(player,csid,option)
      player:setPos(438 ,0 ,-18 ,11 ,24);-- tp lufease
     end
 end;
+require("scripts/globals/battlefield")
+
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "mission");
+end
+
+function onBattlefieldTick(battlefield, tick)
+    g_Battlefield.onBattlefieldTick(battlefield, tick)
+end

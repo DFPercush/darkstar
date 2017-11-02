@@ -60,3 +60,6 @@ function onEventFinish(player,csid,option)
      player:addExp(1000);
     end
 end;
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "mission");
+end

@@ -54,3 +54,12 @@ function onEventFinish(player,csid,option)
         player:addExp(1000);
     end
 end;
+require("scripts/globals/battlefield")
+
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "mission");
+end
+
+function onBattlefieldTick(battlefield, tick)
+    g_Battlefield.onBattlefieldTick(battlefield, tick)
+end

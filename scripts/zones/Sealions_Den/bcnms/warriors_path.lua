@@ -72,3 +72,12 @@ function onEventFinish(player,csid,option)
        player:addTitle(THE_CHEBUKKIS_WORST_NIGHTMARE);
     end
 end;
+require("scripts/globals/battlefield")
+
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "mission");
+end
+
+function onBattlefieldTick(battlefield, tick)
+    g_Battlefield.onBattlefieldTick(battlefield, tick)
+end

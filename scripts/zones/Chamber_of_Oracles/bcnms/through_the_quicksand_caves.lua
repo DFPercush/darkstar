@@ -65,3 +65,6 @@ function onEventFinish(player,csid,option)
     end
 
 end;
+function onBattlefieldInitialise(battlefield)
+    g_Battlefield.onInit(battlefield, "mission");
+end
