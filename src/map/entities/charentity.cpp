@@ -236,9 +236,29 @@ void CCharEntity::clearPacketList()
     }
 }
 
+#include "../packets/entity_update.h"
 void CCharEntity::pushPacket(CBasicPacket* packet)
 {
     std::lock_guard<std::mutex> lk(m_PacketListMutex);
+
+    // Scan and delete duplicate entity update packets to keep the queue (and player lag) from exploding
+    if (packet->id() == 0x0E)
+    {
+        PacketList.erase
+        (
+            std::remove_if<decltype(PacketList)::iterator>
+            (
+                PacketList.begin(), PacketList.end(),
+                [packet](CBasicPacket* item)
+                {
+                    // From CEntityUpdatePacket: offset 0x04 is PEntity->id, 0x0A is updatemask. 0x08 is targetId if that ever matters.
+                    return ((item->ref<uint32>(0x04) == packet->ref<uint32>(0x04)) && (item->ref<uint8>(0x0A) == packet->ref<uint8>(0x0A)));
+                }
+            ),
+            PacketList.end()
+        );
+    }
+
     PacketList.push_back(packet);
 }
 
