@@ -1388,8 +1388,10 @@ void log_init(int argc, char** argv)
 #ifdef DEBUGLOGMAP
 #ifdef WIN32
     logFile = "log\\map-server.log";
+    const char* logPath = "log\\";
 #else
     logFile = "log/map-server.log";
+    const char* logPath = "log/";
 #endif
 #endif
     bool defaultname = true;
@@ -1397,10 +1399,12 @@ void log_init(int argc, char** argv)
     {
         if (strcmp(argv[i], "--ip") == 0 && defaultname)
         {
-            logFile = argv[i + 1];
+            logFile = logPath;
+            logFile.append(argv[i + 1]);
         }
         else if (strcmp(argv[i], "--port") == 0 && defaultname)
         {
+            logFile.append("-");
             logFile.append(argv[i + 1]);
         }
         else if (strcmp(argv[i], "--log") == 0)
