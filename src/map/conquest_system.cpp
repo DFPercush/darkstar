@@ -69,7 +69,7 @@ namespace conquest
             return;
         }
 
-        std::string Query = "SELECT sandoria_influence, bastok_influence, windurst_influence, beastmen_influence FROM conquest_system WHERE region_id = %d;";
+        std::string Query = "SELECT sandoria_influence, bastok_influence, windurst_influence, beastmen_influence FROM conquest_system WHERE region_id = %u;";
 
         int ret = Sql_Query(SqlHandle, Query.c_str(), static_cast<uint8>(region));
 
@@ -104,7 +104,7 @@ namespace conquest
 
         influences[nation] += lost;
 
-        Sql_Query(SqlHandle, "UPDATE conquest_system SET sandoria_influence = %d, bastok_influence = %d, "
+        Sql_Query(SqlHandle, "UPDATE conquest_system SET sandoria_influence = %d, bastok_influence = %u, "
             "windurst_influence = %d, beastmen_influence = %d WHERE region_id = %d;", influences[0], influences[1], influences[2], influences[3], static_cast<uint8>(region));
     }
 
@@ -242,7 +242,7 @@ namespace conquest
         int32 windurst = 0;
         int32 beastmen = 0;
         const char* Query = "SELECT sandoria_influence, bastok_influence, windurst_influence, beastmen_influence \
-                             FROM conquest_system WHERE region_id = %d;";
+                             FROM conquest_system WHERE region_id = %u;";
 
         int32 ret = Sql_Query(SqlHandle, Query, static_cast<uint8>(regionid));
 
@@ -553,7 +553,7 @@ namespace conquest
 
     uint8 GetRegionOwner(REGIONTYPE RegionID)
     {
-        const char* Query = "SELECT region_control FROM conquest_system WHERE region_id = %d";
+        const char* Query = "SELECT region_control FROM conquest_system WHERE region_id = %u";
 
         int32 ret = Sql_Query(SqlHandle, Query, static_cast<uint8>(RegionID));
 
