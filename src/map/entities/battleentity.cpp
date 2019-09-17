@@ -283,7 +283,7 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
         MinimumDelay -= (uint16)(MinimumDelay * 0.8);
         WeaponDelay = (WeaponDelay < MinimumDelay) ? MinimumDelay : WeaponDelay;
     }
-    return WeaponDelay;
+    return (int16)(WeaponDelay / map_config.auto_attack_speed);
 }
 
 uint8 CBattleEntity::GetMeleeRange()
@@ -314,7 +314,7 @@ int16 CBattleEntity::GetRangedWeaponDelay(bool tp)
     {
         delay += PAmmo->getDelay() / 2;
     }
-    return delay;
+    return (int16)(delay / map_config.auto_attack_speed);
 }
 
 int16 CBattleEntity::GetAmmoDelay()

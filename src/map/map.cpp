@@ -1006,6 +1006,8 @@ int32 map_config_default()
     map_config.msg_server_ip = "127.0.0.1";
     map_config.healing_tick_delay = 10;
     map_config.skillup_bloodpact = true;
+    map_config.auto_attack_speed = 1.0f;
+    map_config.ranged_attack_speed = 1.0f;
     return 0;
 }
 
@@ -1338,6 +1340,14 @@ int32 map_config_read(const int8* cfgName)
         else if (strcmp(w1, "skillup_bloodpact") == 0)
         {
             map_config.skillup_bloodpact = atoi(w2);
+        }
+        else if (strcmp(w1, "auto_attack_speed") == 0)
+        {
+            map_config.auto_attack_speed = (float)atof(w2);
+        }
+        else if (strcmp(w1, "ranged_attack_speed") == 0)
+        {
+            map_config.ranged_attack_speed = (float)atof(w2);
         }
         else
         {
